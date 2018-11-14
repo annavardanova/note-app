@@ -14,6 +14,8 @@ Note API delivers Restful API for notes manipulation. The development is done on
 Exception handler is added for proper mapping between exceptions and http error codes.
 The resources returned follow HATEOAS constraint (spring hateoas starter used).
 
+Each API endpoint is protected with user authentication and authorization. Should be noted though, that currently security does not match the user with the one in the DB. In the meantime authorization checks against the user in the DB.  
+
 API is documented with Swagger.
 
 # note-core
