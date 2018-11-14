@@ -9,14 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.note.core.dal.entity.NoteEntity;
-import com.note.core.dal.entity.UserEntity;
 import com.note.core.dal.repository.NoteRepository;
 import com.note.core.service.NoteService;
 import com.note.core.service.UserService;
+import com.note.core.service.exception.NoteAppException;
 import com.note.core.service.exception.NoteCreationFailedException;
 import com.note.core.service.exception.UserNotFoundException;
 import com.note.core.service.model.Note;
-import com.note.core.service.model.User;
 import com.note.core.util.datetime.ZonedDateTimeUtil;
 
 @Service
@@ -34,8 +33,14 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public Optional<Note> getNote(Long noteId) {
-		// TODO Auto-generated method stub
-		return null;
+		Assert.notNull(noteId, "Note cannot be null");
+		try {
+			Optional<NoteEntity> noteEntity = noteRepository.findById(noteId);
+			return noteEntity.map(entity -> modelMapper.map(entity, Note.class));
+		}catch(Exception e) {
+			throw new NoteAppException("Note retrieval failed", e);
+		}
+		
 	}
 
 	@Override
@@ -45,10 +50,9 @@ public class NoteServiceImpl implements NoteService {
 		Assert.notNull(note.getUserId(), "Note creating user cannot be null");
 		
 		try {
-			//check if the note author user exists. If yes, prepare user ref entity
-			User user = userService.getUser(note.getUserId()).orElseThrow(UserNotFoundException :: new);
-//			UserEntity userRefEntity = new UserEntity();
-//			userRefEntity.setId(user.getId());
+			//get and check if the note author user exists. If yes, prepare user ref entity
+			//as alternative exists expression could be used
+			userService.getUser(note.getUserId()).orElseThrow(UserNotFoundException :: new);
 			
 			//prepare note entity to be saved
 			NoteEntity noteEntity = modelMapper.map(note, NoteEntity.class);//user id is mapped automatically

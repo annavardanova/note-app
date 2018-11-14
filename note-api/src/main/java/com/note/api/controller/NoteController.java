@@ -34,7 +34,7 @@ public class NoteController {
 
 	@GetMapping(path="/{id}")
 	public ResponseEntity<NoteResponse> getNote(@PathVariable("id") Long id) {
-		Note note = note = noteService.getNote(id).orElseThrow(NoteNotFoundException::new);
+		Note note = noteService.getNote(id).orElseThrow(NoteNotFoundException::new);
 		NoteResponseAssembler noteResourceAssembler = new NoteResponseAssembler(modelMapper);
 		return new ResponseEntity<NoteResponse>(noteResourceAssembler.toResource(note), HttpStatus.OK);
 	};
@@ -49,6 +49,8 @@ public class NoteController {
 		NoteResponseAssembler noteResourceAssembler = new NoteResponseAssembler(modelMapper);
 		return new ResponseEntity<NoteResponse>(noteResourceAssembler.toResource(note), HttpStatus.OK);
 	};
+	
+	
 
 }
 
