@@ -1,8 +1,10 @@
 package com.note.core.service.model;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 
-public class Note {
+public class Note implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 	private String title;

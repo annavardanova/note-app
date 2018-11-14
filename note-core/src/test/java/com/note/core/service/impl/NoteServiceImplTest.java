@@ -2,6 +2,8 @@ package com.note.core.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -16,7 +18,9 @@ import com.note.core.dal.entity.NoteEntity;
 import com.note.core.dal.entity.UserEntity;
 import com.note.core.dal.repository.NoteRepository;
 import com.note.core.service.NoteService;
+import com.note.core.service.UserService;
 import com.note.core.service.model.Note;
+import com.note.core.service.model.User;
 import com.note.core.util.datetime.ZonedDateTimeUtil;
 
 @RunWith(SpringRunner.class)
@@ -32,6 +36,9 @@ public class NoteServiceImplTest {
 
 	@Autowired
 	private NoteService noteService;
+	
+	@MockBean
+	private UserService userService;
 
 	@MockBean
 	private NoteRepository noteRepository;
@@ -52,6 +59,16 @@ public class NoteServiceImplTest {
 		assertThat(noteReturned.getId()).isNotNull();
 		assertThat(noteReturned.getTitle()).isEqualTo(note.getTitle());
 		assertThat(noteReturned.getNote()).isEqualTo(note.getNote());
+	}
+	
+	@Test
+	public void createNoteTest_incompleteDataProvided_fail() {
+		
+	}
+	
+	@Test
+	public void createNoteTest_repositoryException_fail() {
+		
 	}
 
 	private Note createNoteTest_ok_setup() {
@@ -77,6 +94,8 @@ public class NoteServiceImplTest {
 		note_saved.setUpdatedDate(noteEntity.getUpdatedDate());
 
 		Mockito.when(noteRepository.save(noteEntity)).thenReturn(noteEntity);
+		
+		Mockito.when(userService.getUser(999L)).thenReturn(Optional.of(notSavedUser()));
 
 		Mockito.when(coreModelMapper.map(note_notSaved, NoteEntity.class)).thenReturn(noteEntity);
 
@@ -90,6 +109,12 @@ public class NoteServiceImplTest {
 		Note note = new Note("Test title", "Test note");
 		note.setUserId(999L);
 		return note;
+	}
+	
+	User notSavedUser() {
+		User user = new User();
+		user.setId(999L);
+		return user;
 	}
 
 }

@@ -25,7 +25,7 @@ public class NoteEntity implements Serializable {
 	@Column(name="title", columnDefinition = "TEXT", unique = true, nullable = false, length=50)
 	private String title;
 	
-	@Column(name="note", columnDefinition = "TEXT", nullable = false, length=1000)
+	@Column(name="note", columnDefinition = "TEXT", nullable = true, length=1000)
 	private String note;
 	
 	@Column(name="created_date",columnDefinition="TIMESTAMP WITH TIME ZONE", nullable = false)
