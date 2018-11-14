@@ -2,7 +2,6 @@ package com.note.core.dal.entity;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,23 +9,26 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity(name="user")
-@Table(name="user")
-public class UserEntity implements Serializable {
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+
+@Entity(name="note")
+@Table(name="note")
+public class NoteEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="email", unique = true, nullable = false)
-	private String email;
+	@Column(name="title", columnDefinition = "TEXT", unique = true, nullable = false, length=50)
+	private String title;
 	
-	@Column(name="password", nullable = false)
-	private String password;
+	@Column(name="note", columnDefinition = "TEXT", nullable = false, length=1000)
+	private String note;
 	
 	@Column(name="created_date",columnDefinition="TIMESTAMP WITH TIME ZONE", nullable = false)
 	private ZonedDateTime createdDate;
@@ -34,8 +36,10 @@ public class UserEntity implements Serializable {
 	@Column(name="updated_date",columnDefinition="TIMESTAMP WITH TIME ZONE", nullable = false)
 	private ZonedDateTime updatedDate;
 	
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
-    private List<NoteEntity> notes;
+	@ManyToOne(fetch=FetchType.LAZY, optional=false)
+	@JoinColumn(name="user_id", referencedColumnName="id")
+	private User user;
+	
 	
 
 	@Override
@@ -54,7 +58,7 @@ public class UserEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserEntity other = (UserEntity) obj;
+		NoteEntity other = (NoteEntity) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -66,8 +70,8 @@ public class UserEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UserEntity [id=" + id + ", email=" + email + ", createdDate=" + createdDate + ", updatedDate="
-				+ updatedDate + "]";
+		return "NoteEntity [id=" + id + ", title=" + title + ", note=" + note + ", createdDate=" + createdDate
+				+ ", updatedDate=" + updatedDate + "]";
 	}
 
 	public Long getId() {
@@ -78,20 +82,20 @@ public class UserEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getNote() {
+		return note;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	public ZonedDateTime getCreatedDate() {
@@ -110,14 +114,14 @@ public class UserEntity implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
-	public List<NoteEntity> getNotes() {
-		return notes;
+	public User getUser() {
+		return user;
 	}
 
-	public void setNotes(List<NoteEntity> notes) {
-		this.notes = notes;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	
+
 	
 
 }
