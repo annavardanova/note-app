@@ -47,14 +47,14 @@ public class NoteServiceImpl implements NoteService {
 		try {
 			//check if the note author user exists. If yes, prepare user ref entity
 			User user = userService.getUser(note.getUserId()).orElseThrow(UserNotFoundException :: new);
-			UserEntity userRefEntity = new UserEntity();
-			userRefEntity.setId(user.getId());
+//			UserEntity userRefEntity = new UserEntity();
+//			userRefEntity.setId(user.getId());
 			
 			//prepare note entity to be saved
-			NoteEntity noteEntity = modelMapper.map(note, NoteEntity.class);
+			NoteEntity noteEntity = modelMapper.map(note, NoteEntity.class);//user id is mapped automatically
 			noteEntity.setCreatedDate(ZonedDateTimeUtil.getUTCNow());
-			noteEntity.setUpdatedDate(note.getCreatedDate());
-			noteEntity.setUser(userRefEntity);
+			noteEntity.setUpdatedDate(noteEntity.getCreatedDate());
+//			noteEntity.setUser(userRefEntity);
 			noteEntity = noteRepository.save(noteEntity);
 			note = modelMapper.map(noteEntity, Note.class);
 			return note;

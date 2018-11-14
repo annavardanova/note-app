@@ -28,10 +28,12 @@ public class UserEntity implements Serializable {
 	@Column(name="password", nullable = false)
 	private String password;
 	
-	@Column(name="created_date",columnDefinition="TIMESTAMP WITH TIME ZONE", nullable = false)
+	//the field has to non nullable. Set to true to ease test insertion
+	@Column(name="created_date",columnDefinition="TIMESTAMP WITH TIME ZONE", nullable = true)
 	private ZonedDateTime createdDate;
 	
-	@Column(name="updated_date",columnDefinition="TIMESTAMP WITH TIME ZONE", nullable = false)
+	//the field has to non nullable. Set to true to ease test insertion
+	@Column(name="updated_date",columnDefinition="TIMESTAMP WITH TIME ZONE", nullable = true)
 	private ZonedDateTime updatedDate;
 	
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
