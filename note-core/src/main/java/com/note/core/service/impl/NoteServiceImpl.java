@@ -34,7 +34,7 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public Optional<Note> getNote(Long noteId) {
-		Assert.notNull(noteId, "Note cannot be null");
+		Assert.notNull(noteId, "Note id cannot be null");
 		try {
 			Optional<NoteEntity> noteEntity = noteRepository.findById(noteId);
 			return noteEntity.map(entity -> modelMapper.map(entity, Note.class));
@@ -59,7 +59,6 @@ public class NoteServiceImpl implements NoteService {
 			NoteEntity noteEntity = modelMapper.map(note, NoteEntity.class);//user id is mapped automatically
 			noteEntity.setCreatedDate(ZonedDateTimeUtil.getUTCNow());
 			noteEntity.setUpdatedDate(noteEntity.getCreatedDate());
-//			noteEntity.setUser(userRefEntity);
 			noteEntity = noteRepository.save(noteEntity);
 			note = modelMapper.map(noteEntity, Note.class);
 			return note;
@@ -71,13 +70,12 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public Note updateNote(Note note) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void deleteNote(Long noteId) {
-		Assert.notNull(noteId, "Note cannot be null");
+		Assert.notNull(noteId, "Note id cannot be null");
 		try {
 			Optional<NoteEntity> noteEntity = noteRepository.findById(noteId);
 			noteRepository.delete(noteEntity.orElseThrow(NoteNotFoundException :: new));
