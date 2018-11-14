@@ -43,6 +43,8 @@ spring.datasource.password
 
 Usually for production environment fine tuning of additional properties is required: needed to control connection pool, renew/idle/active connection policies.
 
+Uncomment the spring.jpa.hibernate.ddl-auto=create in the properties file to autogenerate the tables.
+
 Insert test user into the DB- the dates are made optional for ease of insertion.
 INSERT INTO public."user"(
 	id, created_date, email, password, updated_date)
