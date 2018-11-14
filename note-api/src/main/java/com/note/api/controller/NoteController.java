@@ -18,6 +18,7 @@ import com.note.api.dto.request.NoteRequest;
 import com.note.api.dto.response.NoteResponse;
 import com.note.api.dto.response.assembler.NoteResponseAssembler;
 import com.note.core.service.NoteService;
+import com.note.core.service.exception.NoteNotFoundException;
 import com.note.core.service.model.Note;
 
 @RestController
@@ -30,10 +31,12 @@ public class NoteController {
 	@Qualifier("apiModelMapper")
 	private ModelMapper modelMapper;
 	
+
 	@GetMapping(path="/{id}")
 	public ResponseEntity<NoteResponse> getNote(@PathVariable("id") Long id) {
-		return null;
-
+		Note note = note = noteService.getNote(id).orElseThrow(NoteNotFoundException::new);
+		NoteResponseAssembler noteResourceAssembler = new NoteResponseAssembler(modelMapper);
+		return new ResponseEntity<NoteResponse>(noteResourceAssembler.toResource(note), HttpStatus.OK);
 	};
 	
 	
@@ -44,7 +47,6 @@ public class NoteController {
 		note = noteService.createNote(note);
 		
 		NoteResponseAssembler noteResourceAssembler = new NoteResponseAssembler(modelMapper);
-		
 		return new ResponseEntity<NoteResponse>(noteResourceAssembler.toResource(note), HttpStatus.OK);
 	};
 
