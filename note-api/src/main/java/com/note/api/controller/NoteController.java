@@ -61,7 +61,9 @@ public class NoteController {
 	public ResponseEntity<NoteResponse> createNote(@Valid @RequestBody NoteRequest noteModel) {
 		Note note = modelMapper.map(noteModel, Note.class);
 		
-		//subject for a separate web util
+		//subject for a separate web util.
+		//if custom user details are used in security configuration, no need to retrieve the user object
+		//as its id will be available in context.
 		String username = ((org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
 		User user = userService.getUserByUsername(username).get();
 		
