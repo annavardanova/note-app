@@ -5,26 +5,32 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.note.api.security.ApiFilter;
+import com.note.api.security.ApiPermissionEvaluator;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
     private BasicAuthenticationEntryPoint apiAuthenticationEntryPoint;
+	
+	@Autowired
+	private ApiPermissionEvaluator apiPermissionEvaluator;
  
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-          .withUser("user1").password(passwordEncoder().encode("user1Pass"))
+          .withUser("test@test.com").password(passwordEncoder().encode("testPass"))
           .authorities("ROLE_USER");
     }
     
@@ -47,5 +53,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return  NoOpPasswordEncoder.getInstance();//new BCryptPasswordEncoder();
     }
+    
+    @Override
+	public void configure(WebSecurity web) throws Exception {
+    	DefaultWebSecurityExpressionHandler handler = new DefaultWebSecurityExpressionHandler();
+        handler.setPermissionEvaluator(apiPermissionEvaluator);
+    	web.expressionHandler(handler);
+	}
 
 }

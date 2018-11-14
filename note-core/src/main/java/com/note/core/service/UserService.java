@@ -8,4 +8,6 @@ public interface UserService {
 	
 	Optional<User> getUser(Long userId);
 
+	Optional<User> getUserByUsername(String email);
+
 }
