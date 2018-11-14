@@ -13,8 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
-
 @Entity(name="note")
 @Table(name="note")
 public class NoteEntity implements Serializable {
@@ -38,7 +36,7 @@ public class NoteEntity implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
 	@JoinColumn(name="user_id", referencedColumnName="id")
-	private User user;
+	private UserEntity user;
 	
 	
 
@@ -114,11 +112,11 @@ public class NoteEntity implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
-	public User getUser() {
+	public UserEntity getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserEntity user) {
 		this.user = user;
 	}
 
