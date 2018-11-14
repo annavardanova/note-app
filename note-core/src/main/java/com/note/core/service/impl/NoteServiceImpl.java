@@ -77,7 +77,17 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public void deleteNote(Long noteId) {
-		
+		Assert.notNull(noteId, "Note cannot be null");
+		try {
+			Optional<NoteEntity> noteEntity = noteRepository.findById(noteId);
+			noteRepository.delete(noteEntity.orElseThrow(NoteNotFoundException :: new));
+		}catch(NoteNotFoundException e) {
+			throw e;
+		}
+		catch(Exception e) {
+			throw new NoteAppException("Note retrieval failed", e);
+		}
+
 	}
 
 }
