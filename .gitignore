@@ -1,8 +1,10 @@
+target
 # Compiled class file
 *.class
 
 # Log file
 *.log
+logs/
 
 # BlueJ files
 *.ctxt
@@ -21,3 +23,21 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+#eclipse/STS
+.project
+.springBeans
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+.classpath
+.settings/
+
+#idea
+.idea/
+
+#gradle
+.gradle/
+build/
