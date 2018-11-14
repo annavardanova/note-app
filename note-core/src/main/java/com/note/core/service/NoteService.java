@@ -10,7 +10,7 @@ public interface NoteService {
 	Optional<Note> getNote(Long noteId);
 	Note createNote(Note note);
 	Note updateNote(Note note);
-	void deleteNode(Long noteId);
+	void deleteNote(Long noteId);
 	
 
 }

@@ -14,6 +14,7 @@ import com.note.core.service.NoteService;
 import com.note.core.service.UserService;
 import com.note.core.service.exception.NoteAppException;
 import com.note.core.service.exception.NoteCreationFailedException;
+import com.note.core.service.exception.NoteNotFoundException;
 import com.note.core.service.exception.UserNotFoundException;
 import com.note.core.service.model.Note;
 import com.note.core.util.datetime.ZonedDateTimeUtil;
@@ -75,9 +76,8 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public void deleteNode(Long noteId) {
-		// TODO Auto-generated method stub
-
+	public void deleteNote(Long noteId) {
+		
 	}
 
 }

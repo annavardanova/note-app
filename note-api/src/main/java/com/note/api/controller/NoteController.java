@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,10 +48,14 @@ public class NoteController {
 		note = noteService.createNote(note);
 		
 		NoteResponseAssembler noteResourceAssembler = new NoteResponseAssembler(modelMapper);
-		return new ResponseEntity<NoteResponse>(noteResourceAssembler.toResource(note), HttpStatus.OK);
+		return new ResponseEntity<NoteResponse>(noteResourceAssembler.toResource(note), HttpStatus.CREATED);
 	};
 	
-	
+	@DeleteMapping(path="/{id}")
+	public ResponseEntity<?> deleteNote(@PathVariable("id") Long id) {
+		noteService.deleteNote(id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	};
 
 }
 
