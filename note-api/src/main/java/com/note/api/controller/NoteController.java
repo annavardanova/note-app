@@ -42,6 +42,9 @@ public class NoteController {
 	private ModelMapper modelMapper;
 	
 
+	/**
+	 * The action responsible for note creation
+	 */
 	@PreAuthorize("hasPermission(#id, 'note', 'READ')")
 	@GetMapping(path="/{id}")
 	public ResponseEntity<NoteResponse> getNote(@PathVariable("id") Long id) {
@@ -50,6 +53,9 @@ public class NoteController {
 		return new ResponseEntity<NoteResponse>(noteResourceAssembler.toResource(note), HttpStatus.OK);
 	};
 	
+	/**
+	 * The action handles note creation
+	 */
 	@PreAuthorize("hasPermission(#id, 'note', 'CREATE')")
 	@PostMapping("/")
 	public ResponseEntity<NoteResponse> createNote(@Valid @RequestBody NoteRequest noteModel) {
@@ -61,11 +67,13 @@ public class NoteController {
 		
 		note.setUserId(user.getId());//TODO:tmp, top be removed
 		note = noteService.createNote(note);
-		
 		NoteResponseAssembler noteResourceAssembler = new NoteResponseAssembler(modelMapper);
 		return new ResponseEntity<NoteResponse>(noteResourceAssembler.toResource(note), HttpStatus.CREATED);
 	};
 	
+	/**
+	 * The action tries to completely update the business note resource which comprises of title and contents
+	 */
 	@PreAuthorize("hasPermission(#id, 'note', 'EDIT')")
 	@PutMapping(path="/{id}")
 	public ResponseEntity<NoteResponse> editNote(@PathVariable("id") Long id, @Valid @RequestBody NoteRequest noteModel) {
@@ -77,6 +85,9 @@ public class NoteController {
 		return new ResponseEntity<NoteResponse>(noteResourceAssembler.toResource(note), HttpStatus.OK);
 	};
 	
+	/**
+	 * The action responsible for note deletion
+	 */
 	@PreAuthorize("hasPermission(#id, 'note', 'DELETE')")
 	@DeleteMapping(path="/{id}")
 	public ResponseEntity<?> deleteNote(@PathVariable("id") Long id) {

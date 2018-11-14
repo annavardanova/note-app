@@ -8,6 +8,13 @@ import org.springframework.context.annotation.ComponentScan;
 
 import com.note.api.security.ApiPermissionEvaluator;
 
+/**
+ * 
+ * Standard spring boot configuration. 
+ * Further development of the project may suggest external profile specific properties or configuration management server.
+ * @author annavardanova
+ *
+ */
 @ComponentScan(basePackages = "com.note")
 @SpringBootApplication
 public class NoteApiApplication {

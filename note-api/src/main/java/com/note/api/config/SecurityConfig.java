@@ -17,6 +17,12 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import com.note.api.security.ApiFilter;
 import com.note.api.security.ApiPermissionEvaluator;
 
+/**
+ * Currently security does not match the user with the one in the DB. 
+ * In the meantime authorization checks against the user in DB.
+ * @author annavardanova
+ *
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -29,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    	//can add more in memory users
         auth.inMemoryAuthentication()
           .withUser("test@test.com").password(passwordEncoder().encode("testPass"))
           .authorities("ROLE_USER");

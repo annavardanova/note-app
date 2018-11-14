@@ -23,6 +23,12 @@ import com.note.core.service.model.Note;
 import com.note.core.service.model.User;
 import com.note.core.util.datetime.ZonedDateTimeUtil;
 
+/**
+ * The test is created following TDD approach. In general, with farther development 
+ * project's test configuration can be enhanced with data providers, extracted test configuration, and so on.
+ * @author annavardanova
+ *
+ */
 @RunWith(SpringRunner.class)
 public class NoteServiceImplTest {
 

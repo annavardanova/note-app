@@ -18,6 +18,7 @@ import javax.persistence.Table;
 public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	//can be changed to UUID
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;

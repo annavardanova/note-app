@@ -19,6 +19,15 @@ import com.note.core.service.exception.UserNotFoundException;
 import com.note.core.service.model.Note;
 import com.note.core.util.datetime.ZonedDateTimeUtil;
 
+/**
+ * Implementation of the NoteService. Throughout its methods, 
+ * assertions insure here that the service module is used properly.
+ * 
+ * Farther improvement: make exceptions messages make more concrete in some cases.
+ * @author annavardanova
+ *
+ */
+
 @Service
 public class NoteServiceImpl implements NoteService {
 	
