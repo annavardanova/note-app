@@ -1,4 +1,4 @@
-//package com.note.api;
+//package com.note.core;
 //
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@
 //
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
-//public class NoteApiApplicationTests {
+//public class NoteCoreApplicationTests {
 //
 //	@Test
 //	public void contextLoads() {

@@ -10,3 +10,4 @@
 rootProject.name = 'note-app'
 
 include 'note-api'
+include 'note-core'
