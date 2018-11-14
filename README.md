@@ -6,6 +6,7 @@ The project comprises two java projects: note-api and note-core.
 App is gradle app. After it is built, the war cand be found under: ⁨note-app⁩ ▸ ⁨note-api⁩ ▸ ⁨build⁩ ▸ ⁨libs⁩ path
 The war can be run with ordinary java -jar command.
 Swagger documentation: http://localhost:8080/swagger-ui.html (if running locally)
+Creds: test@test.com/testPass
 
 # note-api
 Note API delivers Restful API for notes manipulation. The development is done on the Spring Boot base with simple minimalistic implementation. Further development of the project may suggest external profile specific properties or configuration management server.
@@ -43,7 +44,7 @@ Usually for production environment fine tuning of additional properties is requi
 Insert test user into the DB- the dates are made optional for ease of insertion.
 INSERT INTO public."user"(
 	id, created_date, email, password, updated_date)
-	VALUES (999,NULL, 'test@test.com', 'testpass', NULL);
+	VALUES (999,NULL, 'test@test.com', 'testPass', NULL);
 
 
 
