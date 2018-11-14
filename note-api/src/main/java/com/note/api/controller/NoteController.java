@@ -52,9 +52,10 @@ public class NoteController {
 		return new ResponseEntity<NoteResponse>(noteResourceAssembler.toResource(note), HttpStatus.CREATED);
 	};
 	
-	@PutMapping("/")
-	public ResponseEntity<NoteResponse> editNote(@Valid @RequestBody NoteRequest noteModel) {
+	@PutMapping(path="/{id}")
+	public ResponseEntity<NoteResponse> editNote(@PathVariable("id") Long id, @Valid @RequestBody NoteRequest noteModel) {
 		Note note = modelMapper.map(noteModel, Note.class);
+		note.setId(id);
 		note = noteService.updateNote(note);
 		
 		NoteResponseAssembler noteResourceAssembler = new NoteResponseAssembler(modelMapper);

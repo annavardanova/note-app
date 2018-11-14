@@ -70,7 +70,22 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public Note updateNote(Note note) {
-		return null;
+		Assert.notNull(note, "Note cannot be null");
+		Assert.notNull(note.getId(), "Note id cannot be null");
+		Assert.hasText(note.getTitle(), "Note title cannot be empty");
+		
+		try {
+			//prepare note entity to be saved
+			NoteEntity noteEntity = noteRepository.findById(note.getId()).orElseThrow(NoteNotFoundException :: new);
+			noteEntity.setUpdatedDate(ZonedDateTimeUtil.getUTCNow());
+			noteEntity.setNote(note.getNote());
+			noteEntity.setTitle(note.getTitle());
+			noteEntity = noteRepository.save(noteEntity);
+			note = modelMapper.map(noteEntity, Note.class);
+			return note;
+		}catch(Exception e) {
+			throw new NoteCreationFailedException("Note creation failed", e);
+		}
 	}
 
 	@Override
